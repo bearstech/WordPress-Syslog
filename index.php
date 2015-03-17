@@ -1,11 +1,11 @@
 <?php
 /*
-Plugin Name: Simple History
-Plugin URI: http://simple-history.com
-Description: Plugin that logs various things that occur in WordPress and then presents those events in a very nice GUI.
+Plugin Name: Simple Syslog History
+Plugin URI:
+Description: Plugin that logs various things that occur in WordPress in the System Log. Fork from Pär Thernström's http://simple-history.com/
 Version: 2.0.22
-Author: Pär Thernström
-Author URI: http://simple-history.com/
+Author: Bearstech
+Author URI: http://bearstech.com
 License: GPL2
 */
 
@@ -33,7 +33,6 @@ if ( version_compare( phpversion(), "5.3", ">=") ) {
 
 	/** Load required files */
 	require_once(__DIR__ . "/inc/SimpleHistory.php");
-	require_once(__DIR__ . "/inc/SimpleHistoryLogQuery.php");
 
 	/**
 	 * Register function that is called when plugin is installed
@@ -71,7 +70,7 @@ if ( version_compare( phpversion(), "5.3", ">=") ) {
 		<div class="updated error">
 			<p><?php
 				printf(
-					__( 'Simple History is a great plugin, but to use it your server must have at least PHP 5.3 installed (you have version %s).', 'simple-history' ),
+					__( 'Simple Syslog History is a great plugin, but to use it your server must have at least PHP 5.3 installed (you have version %s).', 'simple-history' ),
 					phpversion()
 				);
 				?></p>

@@ -16,20 +16,11 @@ Go on with uninstall actions:
 
 // Remove options
 $arr_options = array(
- 	"simple_history_pager_size",
- 	"simple_history_db_version",
- 	"simple_history_rss_secret",
- 	"simple_history_show_on_dashboard",
- 	"simple_history_show_as_page"
+ 	"simple_history_db_version"
 );
 
 foreach ($arr_options as $one_option) {
 	delete_option( $one_option );
 }
-
-// Remove database table
-global $wpdb;
-$table_name = $wpdb->prefix . "simple_history";
-$wpdb->query("DROP TABLE IF EXISTS $table_name");
 
 // And we are done. Simple History is ...  history.

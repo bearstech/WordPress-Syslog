@@ -307,46 +307,6 @@ class SimpleMenuLogger extends SimpleLogger
 	*/
 
 	/**
-	 * Get detailed output
-	 */
-	function getLogRowDetailsOutput($row) {
-	
-		$context = $row->context;
-		$message_key = $context["_message_key"];
-		$output = "";
-
-		if ( "edited_menu" == $message_key ) {
-
-			if ( ! empty( $context["menu_items_added"] ) || ! empty( $context["menu_items_removed"] ) )  {
-
-				$output .= "<p>";
-
-				$output .= '<span class="SimpleHistoryLogitem__inlineDivided">';
-				$output .= sprintf(
-					_nx( '%1$s menu item added', '%1$s menu items added', $context["menu_items_added"], "menu logger", "simple-history" ),
-					esc_attr( $context["menu_items_added"] )
-				);
-				$output .= '</span> ';
-
-				$output .= '<span class="SimpleHistoryLogitem__inlineDivided">';
-				$output .= sprintf(
-					_nx( '%1$s menu item removed', '%1$s menu items removed', $context["menu_items_removed"], "menu logger", "simple-history" ),
-					esc_attr( $context["menu_items_removed"] )
-				);
-				$output .= '</span> ';
-
-				$output .= "</p>";
-
-			}
-
-
-		}
-
-		return $output;
-
-	}
-
-	/**
 	 * Log updates to theme menu locations
 	 */
 	function on_load_nav_menus_page_detect_locations_update() {	
