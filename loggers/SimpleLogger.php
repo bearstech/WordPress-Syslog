@@ -395,6 +395,13 @@ class SimpleLogger {
 	 */
 	public function log($level, $message, array $context = array()) {
 
+		// Check facility level in wp-config.php. If not defined, default to warning
+		$numeric_facility_level = array_search(WP_SYSLOG_FACILITY_LEVEL, SimpleLoggerSyslog::NumericLogLevels()) ?: array_search('warning', SimpleLoggerSyslog::NumericLogLevels());
+		$numeric_level = array_search($level, SimpleLoggerSyslog::NumericLogLevels());
+		// If facility level of the message to log is over the value defined in config, just not log.
+		if($numeric_level > $numeric_facility_level) return true;
+
+
 		// Check if $message is a translated message, and if so then fetch original
 		$sh_latest_translations = $this->simpleHistory->gettextLatestTranslations;
 		
@@ -671,6 +678,19 @@ class SimpleLoggerSyslog {
 			SimpleLoggerLogLevels::NOTICE => LOG_NOTICE,
 			SimpleLoggerLogLevels::INFO => LOG_INFO,
 			SimpleLoggerLogLevels::DEBUG => LOG_DEBUG
+		);
+	}
+
+	public function NumericLogLevels() {
+		return array(
+			SimpleLoggerLogLevels::EMERGENCY,
+			SimpleLoggerLogLevels::ALERT,
+			SimpleLoggerLogLevels::CRITICAL,
+			SimpleLoggerLogLevels::ERROR,
+			SimpleLoggerLogLevels::WARNING,
+			SimpleLoggerLogLevels::NOTICE,
+			SimpleLoggerLogLevels::INFO,
+			SimpleLoggerLogLevels::DEBUG,
 		);
 	}
 
