@@ -396,7 +396,8 @@ class SimpleLogger {
 	public function log($level, $message, array $context = array()) {
 
 		// Check criticity level in wp-config.php. If not defined, default to warning
-		$numeric_criticity_level = array_search(WP_SYSLOG_CRITICITY_LEVEL, SimpleLoggerSyslog::NumericLogLevels()) ?: array_search('warning', SimpleLoggerSyslog::NumericLogLevels());
+		if(!defined('WP_SYSLOG_CRITICITY_LEVEL')) define('WP_SYSLOG_CRITICITY_LEVEL', 'warning');
+		$numeric_criticity_level = array_search(WP_SYSLOG_CRITICITY_LEVEL, SimpleLoggerSyslog::NumericLogLevels());
 		$numeric_level = array_search($level, SimpleLoggerSyslog::NumericLogLevels());
 		// If criticity level of the message to log is over the value defined in config, just not log.
 		if($numeric_level > $numeric_criticity_level) return true;
@@ -749,7 +750,8 @@ class SimpleLoggerSyslog {
 
 	public function SyslogLog($level, $message, $context, $slug) {
 		// Syslog logging
-		openlog("Wordpress Log", LOG_PID | LOG_PERROR, LOG_LOCAL0);
+		if(!defined('WP_SYSLOG_FACILITY')) define('WP_SYSLOG_FACILITY', LOG_LOCAL0);
+		openlog("Wordpress Log", LOG_PID | LOG_PERROR, WP_SYSLOG_FACILITY);
 		$message = SimpleLogger::interpolate($message, $context);
 		syslog(SimpleLoggerSyslog::SyslogLogLevels()[$level], SimpleLoggerLogDomains::getDomain($slug)." ".$context['_user_login']." (".$context['_server_remote_addr'].") ".$message);
 		closelog();

@@ -22,6 +22,23 @@ To define a criticity level, add this line in `wp-config.php` :
 define('WP_SYSLOG_CRITICITY_LEVEL', 'info');
 ```
 
+## Define a facility under wich the actions are logged
+
+Available values are as the php doc, default to LOG_LOCAL0 :
+
+* LOG_AUTH
+* LOG_AUTHPRIV
+* LOG_CRON
+* LOG_DAEMON
+* LOG_KERN
+* LOG_LOCAL0 ... LOG_LOCAL7
+* LOG_LPR
+* LOG_MAIL
+* LOG_NEWS
+* LOG_SYSLOG
+* LOG_USER
+* LOG_UUCP
+
 ## Actions beeing logged
 
 You can filter logs by domains. They appear between brackets in the logs :
