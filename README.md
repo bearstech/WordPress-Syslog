@@ -19,7 +19,7 @@ Levels are exactly the same as syslog levels :
 
 To define a criticity level, add this line in `wp-config.php` :
 ```
-define('WP_SYSLOG_FACILITY_LEVEL', 'info');
+define('WP_SYSLOG_CRITICITY_LEVEL', 'info');
 ```
 
 ## Actions beeing logged
