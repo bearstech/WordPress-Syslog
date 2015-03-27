@@ -588,7 +588,7 @@ class SimpleLogger {
 		}
 
 		// Syslog logging
-		SimpleLoggerSyslog::SyslogLog( $level, $message, $context );
+		SimpleLoggerSyslog::SyslogLog( $level, $message, $context, $this->slug );
 
 		// Return $this so we can chain methods
 		return $this;
@@ -665,6 +665,59 @@ class SimpleLoggerLogLevels {
 }
 
 /**
+ * List logger classes and assign a code to add before message to facilitate search in logs
+ */
+class SimpleLoggerLogDomains {
+	public function getDomain($slug) {
+		switch ($slug) {
+			case 'SimpleUserLogger':
+				return '[Auth]';
+				break;
+
+			case 'SimpleThemeLogger':
+				return '[Theme]';
+				break;
+
+			case 'SimplePostLogger':
+				return '[Post]';
+				break;
+
+			case 'SimplePluginLogger':
+				return '[Plugin]';
+				break;
+
+			case 'SimpleOptionsLogger':
+				return '[Options]';
+				break;
+
+			case 'SimpleMenuLogger':
+				return '[Menu]';
+				break;
+
+			case 'SimpleMediaLogger':
+				return '[Media]';
+				break;
+
+			case 'SimpleCoreUpdatesLogger':
+				return '[Core]';
+				break;
+
+			case 'SimpleCommentsLogger':
+				return '[Comments]';
+				break;
+
+			case 'SimpleExportLogger':
+				return '[Export]';
+				break;
+			
+			default:
+				return '[Other]';
+				break;
+		}
+	}
+}
+
+/**
  * Syslog log levels
  */
 class SimpleLoggerSyslog {
@@ -694,11 +747,11 @@ class SimpleLoggerSyslog {
 		);
 	}
 
-	public function SyslogLog($level, $message, $context) {
+	public function SyslogLog($level, $message, $context, $slug) {
 		// Syslog logging
 		openlog("Wordpress Log", LOG_PID | LOG_PERROR, LOG_LOCAL0);
 		$message = SimpleLogger::interpolate($message, $context);
-		syslog(SimpleLoggerSyslog::SyslogLogLevels()[$level], $context['_user_login']." (".$context['_server_remote_addr'].") ".$message);
+		syslog(SimpleLoggerSyslog::SyslogLogLevels()[$level], SimpleLoggerLogDomains::getDomain($slug)." ".$context['_user_login']." (".$context['_server_remote_addr'].") ".$message);
 		closelog();
 	}
 }

@@ -6,7 +6,7 @@
 class SimpleMediaLogger extends SimpleLogger
 {
 
-	public $slug = "SimpleMediaLogger";
+	public $slug = __CLASS__;
 
 	/**
 	 * Get array with information about this logger
