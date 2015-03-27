@@ -39,6 +39,11 @@ Available values are as the php doc, default to LOG_LOCAL0 :
 * LOG_USER
 * LOG_UUCP
 
+To define a facility, add this line in `wp-config.php` :
+```
+define('WP_SYSLOG_FACILITY', LOG_LOCAL1);
+```
+
 ## Actions beeing logged
 
 You can filter logs by domains. They appear between brackets in the logs :
