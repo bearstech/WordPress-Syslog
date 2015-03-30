@@ -751,7 +751,7 @@ class SimpleLoggerSyslog {
 	public function SyslogLog($level, $message, $context, $slug) {
 		// Syslog logging
 		if(!defined('WP_SYSLOG_FACILITY')) define('WP_SYSLOG_FACILITY', LOG_LOCAL0);
-		openlog("Wordpress Log", LOG_PID | LOG_PERROR, WP_SYSLOG_FACILITY);
+		openlog(get_bloginfo('name'), LOG_PID | LOG_PERROR, WP_SYSLOG_FACILITY);
 		$message = SimpleLogger::interpolate($message, $context);
 		syslog(SimpleLoggerSyslog::SyslogLogLevels()[$level], SimpleLoggerLogDomains::getDomain($slug)." ".$context['_user_login']." (".$context['_server_remote_addr'].") ".$message);
 		closelog();
