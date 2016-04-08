@@ -722,7 +722,7 @@ class SimpleLoggerLogDomains {
  * Syslog log levels
  */
 class SimpleLoggerSyslog {
-	public function SyslogLogLevels() {
+	public static function SyslogLogLevels() {
 		return array(
 			SimpleLoggerLogLevels::EMERGENCY => LOG_EMERG,
 			SimpleLoggerLogLevels::ALERT => LOG_ALERT,
@@ -735,7 +735,7 @@ class SimpleLoggerSyslog {
 		);
 	}
 
-	public function NumericLogLevels() {
+	public static function NumericLogLevels() {
 		return array(
 			SimpleLoggerLogLevels::EMERGENCY,
 			SimpleLoggerLogLevels::ALERT,
