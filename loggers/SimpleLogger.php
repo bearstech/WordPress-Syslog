@@ -753,7 +753,10 @@ class SimpleLoggerSyslog {
 		if(!defined('WP_SYSLOG_FACILITY')) define('WP_SYSLOG_FACILITY', LOG_LOCAL0);
 		openlog(get_bloginfo('name'), LOG_PID | LOG_PERROR, WP_SYSLOG_FACILITY);
 		$message = SimpleLogger::interpolate($message, $context);
-		syslog(SimpleLoggerSyslog::SyslogLogLevels()[$level], SimpleLoggerLogDomains::getDomain($slug)." ".$context['_user_login']." (".$context['_server_remote_addr'].") ".$message);
+		$success = syslog(SimpleLoggerSyslog::SyslogLogLevels()[$level], SimpleLoggerLogDomains::getDomain($slug)." ".$context['_user_login']." (".$context['_server_remote_addr'].") ".$message);
+		if(!$success) {
+			error_log('Log failure');
+		}
 		closelog();
 	}
 }
