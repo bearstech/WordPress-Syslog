@@ -669,7 +669,7 @@ class SimpleLoggerLogLevels {
  * List logger classes and assign a code to add before message to facilitate search in logs
  */
 class SimpleLoggerLogDomains {
-	public function getDomain($slug) {
+	public static function getDomain($slug) {
 		switch ($slug) {
 			case 'SimpleUserLogger':
 				return '[Auth]';
