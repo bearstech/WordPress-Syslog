@@ -748,7 +748,7 @@ class SimpleLoggerSyslog {
 		);
 	}
 
-	public function SyslogLog($level, $message, $context, $slug) {
+	public static function SyslogLog($level, $message, $context, $slug) {
 		// Syslog logging
 		if(!defined('WP_SYSLOG_FACILITY')) define('WP_SYSLOG_FACILITY', LOG_LOCAL0);
 		openlog(get_bloginfo('name'), LOG_PID | LOG_PERROR, WP_SYSLOG_FACILITY);
