@@ -102,7 +102,7 @@ class SimpleLogger {
 	/**
 	 * Interpolates context values into the message placeholders.
 	 */
-	function interpolate($message, $context = array()) {
+	public static function interpolate($message, $context = array()) {
 
 		if (!is_array($context)) {
 			return $message;
