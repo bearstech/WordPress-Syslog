@@ -751,7 +751,10 @@ class SimpleLoggerSyslog {
 	public static function SyslogLog($level, $message, $context, $slug) {
 		// Syslog logging
 		if(!defined('WP_SYSLOG_FACILITY')) define('WP_SYSLOG_FACILITY', LOG_LOCAL0);
-		openlog(get_bloginfo('name'), LOG_PID | LOG_PERROR, WP_SYSLOG_FACILITY);
+		$opened = openlog(get_bloginfo('name'), LOG_PID | LOG_PERROR, WP_SYSLOG_FACILITY);
+		if(!$opened) {
+			error_log('Failed to open log file');
+		}
 		$message = SimpleLogger::interpolate($message, $context);
 		$success = syslog(SimpleLoggerSyslog::SyslogLogLevels()[$level], SimpleLoggerLogDomains::getDomain($slug)." ".$context['_user_login']." (".$context['_server_remote_addr'].") ".$message);
 		if(!$success) {
