@@ -751,15 +751,24 @@ class SimpleLoggerSyslog {
 	public static function SyslogLog($level, $message, $context, $slug) {
 		// Syslog logging
 		if(!defined('WP_SYSLOG_FACILITY')) define('WP_SYSLOG_FACILITY', LOG_LOCAL0);
-		$opened = openlog(get_bloginfo('name'), LOG_PID | LOG_PERROR, WP_SYSLOG_FACILITY);
-		if(!$opened) {
-			error_log('Failed to open log file');
-		}
 		$message = SimpleLogger::interpolate($message, $context);
-		$success = syslog(SimpleLoggerSyslog::SyslogLogLevels()[$level], SimpleLoggerLogDomains::getDomain($slug)." ".$context['_user_login']." (".$context['_server_remote_addr'].") ".$message);
-		if(!$success) {
-			error_log('Log failure');
+		$message = SimpleLoggerLogDomains::getDomain($slug)." ".$context['_user_login']." (".$context['_server_remote_addr'].") ".$message;
+		$opened = openlog(get_bloginfo('name'), LOG_PID | LOG_PERROR, WP_SYSLOG_FACILITY);
+		if(defined('WP_SYSLOG_FILE_TARGET')) {
+			$file = SIMPLE_HISTORY_PATH . '/history.log';
+			if (WP_SYSLOG_FILE_TARGET != "default") {
+				$file = WP_SYSLOG_FILE_TARGET;
+			}
+			file_put_contents($file, "[".ucfirst($level)."] ".get_bloginfo('name')." ".$message."\n", FILE_APPEND);
+		} else {
+			if(!$opened) {
+				error_log('Failed to open log file');
+			}
+			$success = syslog(SimpleLoggerSyslog::SyslogLogLevels()[$level], $message);
+			if(!$success) {
+				error_log('Log failure');
+			}
+			closelog();
 		}
-		closelog();
 	}
 }
